@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charge Nurse Report</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+/* ===== ROOT VARIABLES ===== */
+:root {
+    --primary-color: #1538a4;
+    --secondary-color: #33a2ff;
+    --text-color: #2c3e50;
+    --border-color: #e2e8f0;
+    --bg-light: #f8fafc;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+}
+
+/* ===== RESET & BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-light);
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.4;
+    color: var(--text-color);
+}
+
+/* ===== LAYOUT & CONTAINERS ===== */
+.container {
+    max-width: 1200px;
+    margin: var(--spacing-md) auto;
+    padding: var(--spacing-md);
+    background: #fff;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== HEADER ===== */
+.header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1e4fdb 100%);
+    color: #fff;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* ===== FORM ELEMENTS ===== */
+.form-group {
+    margin-bottom: var(--spacing-sm);
+}
+
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 6px var(--spacing-sm);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    height: 32px;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(21, 56, 164, 0.1);
+}
+
+/* ===== SECTION TITLES ===== */
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    color: #fff;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin: var(--spacing-md) 0 var(--spacing-sm);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1e4fdb 100%);
+    color: #fff;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: #fff;
+}
+
+.btn-sm {
+    padding: 4px var(--spacing-sm);
+    font-size: 12px;
+}
+
+/* ===== EVENTS SECTION ===== */
+.events-container {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.event-status-group {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.event-radio-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--bg-light);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.event-details {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+    transition: all 0.3s ease;
+}
+
+.event-status-group {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+.event-radio-group {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+.event-radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.event-radio-group span {
+    font-weight: 500;
+}
+
+
+/* ===== CUSTOM COMPONENTS ===== */
+.voucher-entry, .cssd-entry, .maintenance-entry {
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+    .container { padding: var(--spacing-sm); }
+    
+    .form-row > [class*='col-'] {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .section-title {
+        font-size: 14px;
+        padding: var(--spacing-sm);
+    }
+}
+
+/* ===== UTILITIES ===== */
+.mt-2 { margin-top: var(--spacing-md); }
+.mb-2 { margin-bottom: var(--spacing-md); }
+.text-center { text-align: center; }
+.d-none { display: none; }
+.d-block { display: block; }
+
+
+.event-status-group {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.event-radio-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--bg-light);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.event-radio-group:hover {
+    background: #eef2f7;
+}
+
+    .section-title {
+        background: linear-gradient(135deg, #1538a4 0%, #1e4fdb 100%);
+        color: white;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .table {
+        background: white;
+        margin-bottom: 0;
+    }
+    .table th {
+        background: #f8f9fa;
+        text-align: center;
+    }
+    .table td {
+        vertical-align: middle;
+    }
+    .data-row {
+        display: flex;
+        margin-bottom: 10px;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+    }
+    .data-label {
+        font-weight: bold;
+        min-width: 200px;
+        color: #1538a4;
+    }
+    .header-title {
+        text-align: center;
+        color: #1538a4;
+        margin-bottom: 30px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .print-button {
+        background: linear-gradient(135deg, #1538a4 0%, #1e4fdb 100%);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+    .print-button:hover {
+        opacity: 0.9;
+    }
+
+    /* Section Icons */
+    .section-title::before {
+        margin-right: 10px;
+        font-size: 20px;
+    }
+    .section-title.attendance::before { content: "👥"; }
+    .section-title.cpr::before { content: "🚨"; }
+    .section-title.narcotic::before { content: "💉"; }
+    .section-title.gas::before { content: "【O₂】"; }
+    .section-title.cssd::before { content: "⟲"; }
+    .section-title.utility::before { content: "🏥"; }
+    .section-title.maintenance::before { content: "🔧"; }
+    .section-title.cmh::before { content: "📝"; }
+    .section-title.events::before { content: "⚠️"; }
+    .section-title.spotlight::before { content: "🔍"; }
+@media print {
+        body {
+            background-color: white;
+            padding: 0;
+        }
+        .no-print { 
+            display: none; 
+        }
+        .section {
+            break-inside: avoid;
+            box-shadow: none;
+            border: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            background: linear-gradient(135deg, #1538a4 0%, #1e4fdb 100%) !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .table {
+            border: 1px solid #dee2e6;
+        }
+        .table th {
+            background-color: #f8f9fa !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+    }
+
+@media print {
+    .header {
+        background: linear-gradient(135deg, #1538a4 0%, #1e4fdb 100%) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color: white !important;
+    }
+}
+
+
+/* Add this to your <style> section */
+.footer {
+    text-align: center;
+    padding: 8px 0;
+    font-size: 12px;
+    color: #666;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Print styles for footer */
+@media print {
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        font-size: 10px;
+        padding: 5px 0;
+        border-top: 0.5px solid #ddd;
+        background-color: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
+    </style>
+    <!-- Add the html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+</head>
+
+<body>
+        <!-- Header Image -->
+        <img src="C:\Users\mghonim\Desktop\CN Report\Care logo.jpg" alt="Header Image" class="header-img img-fluid">
+
+<div class="container" id="reportContent">
+    <div class="header">
+        <h1>Charge Nurse Report</h1>
+    </div>
+
+ <!-- Date and Shift Section -->
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="date">Date:</label>
+        <input type="text" class="form-control" id="date" readonly>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="shift">Shift:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="shift" id="shiftDay" value="Day">
+            <label class="form-check-label" for="shiftDay">Day</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="shift" id="shiftNight" value="Night">
+            <label class="form-check-label" for="shiftNight">Night</label>
+        </div>
+    </div>
+</div>
+
+    <!-- Attendance Entry Fields -->
+	<h3 class="section-title attendance">Attendance Details</h3>
+
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="p1">P1</label>
+            <input type="text" class="form-control" id="p1" placeholder="No. of staff in P1">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="p3">P3</label>
+            <input type="text" class="form-control" id="p3" placeholder="No. of staff in  P3">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="c2">C2</label>
+            <input type="text" class="form-control" id="c2" placeholder="No. of staff in  C2">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="absent">Absent</label>
+            <input type="text" class="form-control" id="absent" placeholder="Mention Staff Absent">
+        </div>
+    </div>
+
+    <!-- CPR Team Section -->
+   <h3 class="section-title cpr">CPR Team</h3>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="chestCompression">Chest Compression</label>
+            <input type="text" class="form-control" id="chestCompression" placeholder="Write The Assigned Nurse">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="ivAccessMedication">IV Access & Medication</label>
+            <input type="text" class="form-control" id="ivAccessMedication" placeholder="Write The Assigned Nurse">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="airway">Airway</label>
+            <input type="text" class="form-control" id="airway" placeholder="Write The Assigned Nurse">
+        </div>
+        <div class="form-group col-md-3">
+            <label for="monitorDefibrillator">Monitor & Defibrillator</label>
+            <input type="text" class="form-control" id="monitorDefibrillator" placeholder="Write The Assigned Nurse">
+        </div>
+    </div>
+
+    <!-- Narcotic Section -->
+    <h3 class="section-title narcotic">Narcotic</h3>>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="midazolam">Midazolam</label>
+            <input type="text" class="form-control" id="midazolam" placeholder="No. of empty Midazolam ">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="fentanyl">Fentanyl</label>
+            <input type="text" class="form-control" id="fentanyl" placeholder="No. of empty Fentanyl">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="tramal">Tramal</label>
+            <input type="text" class="form-control" id="tramal" placeholder="No. of empty Tramal">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="diazepam">Diazepam</label>
+            <input type="text" class="form-control" id="diazepam" placeholder="No. of empty Diazepam">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="morphine">Morphine</label>
+            <input type="text" class="form-control" id="morphine" placeholder="No. of empty Morphine">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="ketamine">Ketamine</label>
+            <input type="text" class="form-control" id="ketamine" placeholder="No. of empty Ketamine ">
+        </div>
+    </div>
+
+
+    <!-- Biomedical Gas Section -->
+    <h3 class="section-title gas">Biomedical Gas</h3>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="cylinderStock">Cylinder Stock</label>
+            <input type="text" class="form-control" id="cylinderStock" placeholder="How Many O2 Cylinders in your Stock ?">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="crashCartCylinder">Crash Cart Cylinder Amount</label>
+            <input type="text" class="form-control" id="crashCartCylinder" placeholder="The amount of O2 in Crash cart Cylinder">
+        </div>
+    </div>
+
+
+    <!-- Utility Room Section -->
+    <h3 class="section-title utility">Utility Room</h3>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="linenStock">Linen Stock</label>
+            <input type="text" class="form-control" id="linenStock" placeholder="How many balnkets in your Stock ?">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="utilityRemarks">Remarks</label>
+            <input type="text" class="form-control" id="utilityRemarks" placeholder="Enter remarks">
+        </div>
+    </div>
+
+<!-- CSSD Section -->
+<h3 class="section-title cssd">CSSD Entries</h3>
+<div class="form-row">
+    <div class="event-status-group">
+        <label class="event-radio-group">
+            <input type="radio" name="cssdStatus" id="cssdYes" value="cssdYes" onclick="toggleCSSDDetails(true)">
+            <span>There are CSSD items</span>
+        </label>
+        <label class="event-radio-group">
+            <input type="radio" name="cssdStatus" id="cssdNo" value="cssdNo" onclick="toggleCSSDDetails(false)">
+            <span>No CSSD items</span>
+        </label>
+    </div>
+</div>
+
+<div id="cssdDetails" style="display: none;">
+    <div id="cssdEntries">
+        <!-- CSSD entries will be added here -->
+        <div class="cssd-entry">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label>Items Sent</label>
+                    <input type="text" class="form-control cssd-sent" placeholder="Items sent to CSSD">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Items Received</label>
+                    <input type="text" class="form-control cssd-received" placeholder="Items received from CSSD">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Time</label>
+                    <input type="time" class="form-control cssd-time">
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Remarks</label>
+                    <input type="text" class="form-control cssd-remarks" placeholder="Enter remarks">
+                </div>
+                <div class="form-group col-md-1">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeCSSDEntry(this)">X</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row mt-2">
+        <div class="form-group col-md-12">
+            <button type="button" class="btn btn-primary" onclick="addCSSDEntry()">+ Add Another CSSD Entry</button>
+        </div>
+    </div>
+</div>
+
+
+   <!-- Maintenance Section -->
+<h3 class="section-title maintenance">Maintenance Entries</h3>
+<div class="event-status-group">
+    <label class="event-radio-group">
+        <input type="radio" name="maintenanceStatus" id="maintenanceYes" value="maintenanceYes" onclick="toggleMaintenanceDetails(true)">
+        <span>There are maintenance issues</span>
+    </label>
+    <label class="event-radio-group">
+        <input type="radio" name="maintenanceStatus" id="maintenanceNo" value="maintenanceNo" onclick="toggleMaintenanceDetails(false)">
+        <span>No maintenance issues</span>
+    </label>
+</div>
+
+<div id="maintenanceDetails" style="display: none;">
+    <div id="maintenanceEntries">
+        <!-- Maintenance entries will be added here -->
+        <div class="maintenance-entry">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label>Type</label>
+                    <select class="form-control maintenance-type">
+                        <option value="">Select Type</option>
+                        <option value="General">General</option>
+                        <option value="Biomedical">Biomedical</option>
+                        <option value="IT">IT</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Plumbing">Plumbing</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Location/Equipment</label>
+                    <input type="text" class="form-control maintenance-location" placeholder="Enter location/equipment">
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Issue</label>
+                    <input type="text" class="form-control maintenance-issue" placeholder="Describe the issue">
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Time Reported</label>
+                    <input type="time" class="form-control maintenance-time">
+                </div>
+                <div class="form-group col-md-2">
+                    <label>Status</label>
+                    <select class="form-control maintenance-status">
+                        <option value="">Select Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Delayed">Delayed</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-1">
+                    <label>Priority</label>
+                    <select class="form-control maintenance-priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Urgent">Urgent</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-1">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeMaintenanceEntry(this)">X</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-11">
+                    <label>Remarks</label>
+                    <input type="text" class="form-control maintenance-remarks" placeholder="Enter any additional remarks">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-row mt-2">
+        <div class="form-group col-md-12">
+            <button type="button" class="btn btn-primary" onclick="addMaintenanceEntry()">+ Add Another Maintenance Entry</button>
+        </div>
+    </div>
+</div>
+
+
+   <!-- CMH Logs Section -->
+<h3 class="section-title cmh">CMH Logs</h3>
+<div class="form-row">
+    <div class="event-status-group">
+        <label class="event-radio-group">
+            <input type="radio" name="cmhLogs" id="allExcept" value="allExcept" onclick="toggleCMHLogs(true)">
+            <span>All Checked Except</span>
+        </label>
+        <label class="event-radio-group">
+            <input type="radio" name="cmhLogs" id="allChecked" value="allChecked" onclick="toggleCMHLogs(false)">
+            <span>All Checked</span>
+        </label>
+    </div>
+</div>
+
+<div id="cmhLogsDetails" style="display: none;">
+    <div id="cmhLogEntries">
+        <!-- CMH Log entries will be added here -->
+        <div class="cmh-log-entry">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label>Staff Nurse Assigned</label>
+                    <input type="text" class="form-control cmh-nurse" placeholder="Enter nurse name">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Log Details</label>
+                    <input type="text" class="form-control cmh-log" placeholder="Enter log details">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Remarks</label>
+                    <input type="text" class="form-control cmh-remarks" placeholder="Enter remarks">
+                </div>
+                <div class="form-group col-md-1">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeCMHLog(this)">X</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row mt-2">
+        <div class="form-group col-md-12">
+            <button type="button" class="btn btn-primary" onclick="addCMHLog()">+ Add Another Log</button>
+        </div>
+    </div>
+</div>
+
+   <!-- Updated Events Section HTML -->
+<h3 class="section-title events">Events</h3>
+<div class="events-container">
+    <!-- Event Status Selection -->
+    <div class="event-status-group">
+        <label class="event-radio-group">
+            <input type="radio" name="eventStatus" id="eventYes" value="eventYes" onclick="toggleEventDetails(true)">
+            <span>There is an event</span>
+        </label>
+        <label class="event-radio-group">
+            <input type="radio" name="eventStatus" id="eventNo" value="eventNo" onclick="toggleEventDetails(false)">
+            <span>There are no events</span>
+        </label>
+    </div>
+
+    <!-- Event Details Form -->
+    <div id="eventDetails" class="event-details" style="display: none;">
+        <div class="event-entry">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="eventType">Event Type</label>
+                    <select class="form-control" id="eventType">
+                        <option value="">Select event type...</option>
+                        <option value="incident">Incident</option>
+                        <option value="near-miss">Near Miss</option>
+                        <option value="complaint">Complaint</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="eventPriority">Priority</label>
+                    <select class="form-control" id="eventPriority">
+                        <option value="">Select priority...</option>
+                        <option value="urgent">Urgent</option>
+                        <option value="normal">Normal</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="eventTime">Time</label>
+                    <input type="time" class="form-control" id="eventTime">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="staffPatientInvolved">Staff/Patient Involved</label>
+                    <input type="text" class="form-control" id="staffPatientInvolved" placeholder="Enter names">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="location">Location</label>
+                    <input type="text" class="form-control" id="location" placeholder="Enter location">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label for="eventDescription">Description</label>
+                    <textarea class="form-control" id="eventDescription" rows="3" placeholder="Describe the event in detail..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label for="eventAction">Action Taken</label>
+                    <textarea class="form-control" id="eventAction" rows="2" placeholder="Describe actions taken..."></textarea>
+                </div>
+            </div>
+
+            <div class="event-actions">
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeEvent(this)">
+                    <i class="fas fa-trash-alt"></i> Remove
+                </button>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary add-event-btn" onclick="addNewEvent()">
+            <i class="fas fa-plus"></i> Add Another Event
+        </button>
+    </div>
+</div>
+
+   <!-- Spotlight Report Section -->
+<h3 class="section-title spotlight">Spotlight Report</h3>
+<div class="form-row">
+    <div class="event-status-group">
+        <label class="event-radio-group">
+            <input type="radio" name="spotlightReport" id="spotlightYes" value="spotlightYes" onclick="toggleSpotlightDetails(true)">
+            <span>Yes</span>
+        </label>
+        <label class="event-radio-group">
+            <input type="radio" name="spotlightReport" id="spotlightNo" value="spotlightNo" onclick="toggleSpotlightDetails(false)">
+            <span>No</span>
+        </label>
+    </div>
+</div>
+
+<div id="spotlightDetails" style="display: none;">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <div class="event-status-group">
+                <label class="event-radio-group">
+                    <input type="radio" name="reportLevel" id="unitLevel" value="unitLevel">
+                    <span>Unit Level</span>
+                </label>
+                <label class="event-radio-group">
+                    <input type="radio" name="reportLevel" id="departmentalLevel" value="departmentalLevel">
+                    <span>Departmental Level</span>
+                </label>
+                <label class="event-radio-group">
+                    <input type="radio" name="reportLevel" id="executiveLevel" value="executiveLevel">
+                    <span>Executive Level</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>Description</label>
+            <input type="text" class="form-control" id="spotlightDescription" placeholder="Enter description">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Feedback</label>
+            <input type="text" class="form-control" id="spotlightFeedback" placeholder="Enter feedback">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Status</label>
+            <input type="text" class="form-control" id="spotlightStatus" placeholder="Enter status">
+        </div>
+    </div>
+</div>
+
+
+<!-- Voucher Section -->
+<div class="section-title">Voucher</div>
+<div class="events-container">
+    <!-- Voucher Status Selection -->
+    <div class="event-status-group" style="display: flex; align-items: center; gap: 20px;">
+        <label class="event-radio-group" style="margin-right: 20px;">
+            <input type="radio" name="voucherStatus" id="voucherYes" value="voucherYes" onclick="toggleVoucherDetails(true)">
+            <span>There is a voucher</span>
+        </label>
+        <label class="event-radio-group">
+            <input type="radio" name="voucherStatus" id="voucherNo" value="voucherNo" onclick="toggleVoucherDetails(false)">
+            <span>There are no vouchers</span>
+        </label>
+    </div>
+
+    <div id="voucherDetails" style="display: none;">
+        <div id="voucherEntries">
+            <!-- Voucher entries will be added here -->
+            <div class="voucher-entry">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label>Sent Department</label>
+                        <input type="text" class="form-control voucher-number" placeholder="Enter Sent Department">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Description</label>
+                        <input type="text" class="form-control voucher-description" placeholder="Enter details">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Action</label>
+                        <input type="text" class="form-control voucher-action" placeholder="Enter action taken">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label>&nbsp;</label>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeVoucher(this)">X</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row mt-2">
+            <div class="form-group col-md-12">
+                <button type="button" class="btn btn-primary" onclick="addVoucher()">+ Add Another Voucher</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<div class="text-right no-print mb-3">
+    <button onclick="window.print()" class="print-button">Print Report</button>
+</div>
+
+<script>
+
+// Function to format date as DD/MM/YYYY
+function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+// Function to set date and suggest shift when page loads
+function setDateAndShift() {
+    const currentDate = new Date();
+    const dateField = document.getElementById('date');
+    
+    // Set the date
+    dateField.value = formatDate(currentDate);
+    
+    // Add class to style readonly date field
+    dateField.classList.add('readonly-field');
+    
+    // Suggest shift based on current time but don't auto-select
+    const hour = new Date().getHours();
+    if (hour >= 7 && hour < 19) {
+        document.getElementById('shiftDay').focus();
+    } else {
+        document.getElementById('shiftNight').focus();
+    }
+}
+
+// Call the function when the page loads
+document.addEventListener('DOMContentLoaded', setDateAndShift);
+
+ document.getElementById('generatePDF').addEventListener('click', () => {
+        const element = document.getElementById('reportContent');
+        html2pdf()
+            .from(element)
+            .set({
+                margin: 0.5,
+                filename: 'Charge_Nurse_Report.pdf',
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a1', orientation: 'portrait' } // Change to 'a4' for better fit
+            })
+            .save();
+    });
+
+function toggleCSSDDetails(show) {
+    document.getElementById('cssdDetails').style.display = show ? 'block' : 'none';
+}
+
+function addCSSDEntry() {
+    const cssdEntries = document.getElementById('cssdEntries');
+    const newEntry = document.createElement('div');
+    newEntry.className = 'cssd-entry';
+    newEntry.innerHTML = `
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label>Items Sent</label>
+                <input type="text" class="form-control cssd-sent" placeholder="Items sent to CSSD">
+            </div>
+            <div class="form-group col-md-3">
+                <label>Items Received</label>
+                <input type="text" class="form-control cssd-received" placeholder="Items received from CSSD">
+            </div>
+            <div class="form-group col-md-3">
+                <label>Time</label>
+                <input type="time" class="form-control cssd-time">
+            </div>
+            <div class="form-group col-md-2">
+                <label>Remarks</label>
+                <input type="text" class="form-control cssd-remarks" placeholder="Enter remarks">
+            </div>
+            <div class="form-group col-md-1">
+                <label>&nbsp;</label>
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeCSSDEntry(this)">X</button>
+            </div>
+        </div>
+    `;
+    cssdEntries.appendChild(newEntry);
+}
+
+function removeCSSDEntry(button) {
+    const cssdEntry = button.closest('.cssd-entry');
+    const allCSSDEntries = document.getElementsByClassName('cssd-entry');
+    
+    if (allCSSDEntries.length > 1) {
+        cssdEntry.remove();
+    } else {
+        // Clear inputs if it's the last entry
+        const inputs = cssdEntry.getElementsByTagName('input');
+        for (let input of inputs) {
+            input.value = '';
+        }
+    }
+}
+
+function toggleMaintenanceDetails(show) {
+    document.getElementById('maintenanceDetails').style.display = show ? 'block' : 'none';
+}
+
+function addMaintenanceEntry() {
+    const maintenanceEntries = document.getElementById('maintenanceEntries');
+    const newEntry = document.createElement('div');
+    newEntry.className = 'maintenance-entry';
+    newEntry.innerHTML = `
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label>Type</label>
+                <select class="form-control maintenance-type">
+                    <option value="">Select Type</option>
+                    <option value="General">General</option>
+                    <option value="Biomedical">Biomedical</option>
+                    <option value="IT">IT</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Plumbing">Plumbing</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label>Location/Equipment</label>
+                <input type="text" class="form-control maintenance-location" placeholder="Enter location/equipment">
+            </div>
+            <div class="form-group col-md-2">
+                <label>Issue</label>
+                <input type="text" class="form-control maintenance-issue" placeholder="Describe the issue">
+            </div>
+            <div class="form-group col-md-2">
+                <label>Time Reported</label>
+                <input type="time" class="form-control maintenance-time">
+            </div>
+            <div class="form-group col-md-2">
+                <label>Status</label>
+                <select class="form-control maintenance-status">
+                    <option value="">Select Status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Delayed">Delayed</option>
+                </select>
+            </div>
+            <div class="form-group col-md-1">
+                <label>Priority</label>
+                <select class="form-control maintenance-priority">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Urgent">Urgent</option>
+                </select>
+            </div>
+            <div class="form-group col-md-1">
+                <label>&nbsp;</label>
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeMaintenanceEntry(this)">X</button>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-11">
+                <label>Remarks</label>
+                <input type="text" class="form-control maintenance-remarks" placeholder="Enter any additional remarks">
+            </div>
+        </div>
+    `;
+    maintenanceEntries.appendChild(newEntry);
+}
+
+function removeMaintenanceEntry(button) {
+    const maintenanceEntry = button.closest('.maintenance-entry');
+    const allMaintenanceEntries = document.getElementsByClassName('maintenance-entry');
+    
+    if (allMaintenanceEntries.length > 1) {
+        maintenanceEntry.remove();
+    } else {
+        // Clear inputs if it's the last entry
+        const inputs = maintenanceEntry.getElementsByTagName('input');
+        const selects = maintenanceEntry.getElementsByTagName('select');
+        
+        for (let input of inputs) {
+            input.value = '';
+        }
+        for (let select of selects) {
+            select.selectedIndex = 0;
+        }
+    }
+}
+
+
+    function toggleCMHLogs(show) {
+        document.getElementById('cmhLogsDetails').style.display = show ? 'block' : 'none';
+    }
+function addCMHLog() {
+    const cmhLogEntries = document.getElementById('cmhLogEntries');
+    const newLog = document.createElement('div');
+    newLog.className = 'cmh-log-entry';
+    newLog.innerHTML = `
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label>Staff Nurse Assigned</label>
+                <input type="text" class="form-control cmh-nurse" placeholder="Enter nurse name">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Log Details</label>
+                <input type="text" class="form-control cmh-log" placeholder="Enter log details">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Remarks</label>
+                <input type="text" class="form-control cmh-remarks" placeholder="Enter remarks">
+            </div>
+            <div class="form-group col-md-1">
+                <label>&nbsp;</label>
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeCMHLog(this)">X</button>
+            </div>
+        </div>
+    `;
+    cmhLogEntries.appendChild(newLog);
+}
+
+function removeCMHLog(button) {
+    const logEntry = button.closest('.cmh-log-entry');
+    const allLogEntries = document.getElementsByClassName('cmh-log-entry');
+    
+    if (allLogEntries.length > 1) {
+        logEntry.remove();
+    } else {
+        // Clear inputs if it's the last entry
+        const inputs = logEntry.getElementsByTagName('input');
+        for (let input of inputs) {
+            input.value = '';
+        }
+    }
+}
+
+
+// Add these JavaScript functions
+
+function toggleEventDetails(show) {
+    const eventDetails = document.getElementById('eventDetails');
+    eventDetails.style.display = show ? 'block' : 'none';
+}
+
+function addNewEvent() {
+    const eventDetails = document.getElementById('eventDetails');
+    const eventEntry = document.querySelector('.event-entry').cloneNode(true);
+    
+    // Clear all inputs in the cloned entry
+    eventEntry.querySelectorAll('input, textarea, select').forEach(input => {
+        input.value = '';
+    });
+    
+    // Insert before the "Add Another Event" button
+    eventDetails.insertBefore(eventEntry, document.querySelector('.add-event-btn'));
+}
+
+function removeEvent(button) {
+    const eventEntries = document.querySelectorAll('.event-entry');
+    if (eventEntries.length > 1) {
+        button.closest('.event-entry').remove();
+    } else {
+        // Clear inputs if it's the last entry
+        const entry = button.closest('.event-entry');
+        entry.querySelectorAll('input, textarea, select').forEach(input => {
+            input.value = '';
+        });
+    }
+}
+
+
+    function toggleEventDetails(show) {
+        document.getElementById('eventDetails').style.display = show ? 'block' : 'none';
+    }
+
+    function toggleSpotlightDetails(show) {
+        document.getElementById('spotlightDetails').style.display = show ? 'block' : 'none';
+    }
+
+function toggleVoucherDetails(show) {
+    document.getElementById('voucherDetails').style.display = show ? 'block' : 'none';
+}
+
+function addVoucher() {
+    const voucherEntries = document.getElementById('voucherEntries');
+    const newVoucher = document.createElement('div');
+    newVoucher.className = 'voucher-entry';
+    newVoucher.innerHTML = `
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Sent Department</label>
+                <input type="text" class="form-control voucher-number" placeholder="Enter Sent Department">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Description</label>
+                <input type="text" class="form-control voucher-description" placeholder="Enter details">
+            </div>
+            <div class="form-group col-md-3">
+                <label>Action</label>
+                <input type="text" class="form-control voucher-action" placeholder="Enter action taken">
+            </div>
+            <div class="form-group col-md-1">
+                <label>&nbsp;</label>
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeVoucher(this)">X</button>
+            </div>
+        </div>
+    `;
+    voucherEntries.appendChild(newVoucher);
+}
+
+function removeVoucher(button) {
+    const voucherEntry = button.closest('.voucher-entry');
+    const allVoucherEntries = document.getElementsByClassName('voucher-entry');
+    
+    if (allVoucherEntries.length > 1) {
+        voucherEntry.remove();
+    } else {
+        // Clear inputs if it's the last entry
+        const inputs = voucherEntry.getElementsByTagName('input');
+        for (let input of inputs) {
+            input.value = '';
+        }
+    }
+}
+
+
+
+function saveAndGenerateReport() {
+    // Collect all data from the form
+    const reportData = {
+        // Basic Information
+        date: document.getElementById('date').value,
+        shift: document.querySelector('input[name="shift"]:checked')?.value,
+
+        // Attendance Details
+        attendance: {
+            p1: document.getElementById('p1').value,
+            p3: document.getElementById('p3').value,
+            c2: document.getElementById('c2').value,
+            absent: document.getElementById('absent').value
+        },
+
+        // CPR Team
+        cprTeam: {
+            chestCompression: document.getElementById('chestCompression').value,
+            ivAccessMedication: document.getElementById('ivAccessMedication').value,
+            airway: document.getElementById('airway').value,
+            monitorDefibrillator: document.getElementById('monitorDefibrillator').value
+        },
+
+        // Narcotic
+        narcotic: {
+            midazolam: document.getElementById('midazolam').value,
+            fentanyl: document.getElementById('fentanyl').value,
+            tramal: document.getElementById('tramal').value,
+            diazepam: document.getElementById('diazepam').value,
+            morphine: document.getElementById('morphine').value,
+            ketamine: document.getElementById('ketamine').value
+        },
+
+        // Biomedical Gas
+        biomedicalGas: {
+            cylinderStock: document.getElementById('cylinderStock').value,
+            crashCartCylinder: document.getElementById('crashCartCylinder').value
+        },
+
+        // Utility Room
+        utilityRoom: {
+            linenStock: document.getElementById('linenStock').value,
+            remarks: document.getElementById('utilityRemarks').value
+        },
+
+        // CSSD Details
+        cssdEntries: Array.from(document.getElementsByClassName('cssd-entry')).map(entry => ({
+            itemsSent: entry.querySelector('.cssd-sent').value,
+            itemsReceived: entry.querySelector('.cssd-received').value,
+            time: entry.querySelector('.cssd-time').value,
+            remarks: entry.querySelector('.cssd-remarks').value
+        })),
+
+        // Maintenance Details
+        maintenanceEntries: Array.from(document.getElementsByClassName('maintenance-entry')).map(entry => ({
+            type: entry.querySelector('.maintenance-type').value,
+            location: entry.querySelector('.maintenance-location').value,
+            issue: entry.querySelector('.maintenance-issue').value,
+            timeReported: entry.querySelector('.maintenance-time').value,
+            status: entry.querySelector('.maintenance-status').value,
+            priority: entry.querySelector('.maintenance-priority').value,
+            remarks: entry.querySelector('.maintenance-remarks').value
+        })),
+
+        // CMH Logs
+        cmhLogs: Array.from(document.getElementsByClassName('cmh-log-entry')).map(entry => ({
+            nurse: entry.querySelector('.cmh-nurse').value,
+            logDetails: entry.querySelector('.cmh-log').value,
+            remarks: entry.querySelector('.cmh-remarks').value
+        })),
+
+        // Events
+        events: document.getElementById('eventDetails').style.display !== 'none' ? {
+            type: document.getElementById('eventType').value,
+            priority: document.getElementById('eventPriority').value,
+            time: document.getElementById('eventTime').value,
+            staffPatientInvolved: document.getElementById('staffPatientInvolved').value,
+            location: document.getElementById('location').value,
+            description: document.getElementById('eventDescription').value,
+            action: document.getElementById('eventAction').value
+        } : null,
+
+        // Spotlight Report
+        spotlight: document.getElementById('spotlightDetails').style.display !== 'none' ? {
+            level: document.querySelector('input[name="reportLevel"]:checked')?.value,
+            description: document.getElementById('spotlightDescription').value,
+            feedback: document.getElementById('spotlightFeedback').value,
+            status: document.getElementById('spotlightStatus').value
+        } : null
+    };
+
+    // Generate new window with report
+    const reportWindow = window.open('', '_blank');
+    reportWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Charge Nurse Report</title>
+            <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+            <style>
+                body { 
+                    padding: 20px;
+                    font-family: Arial, sans-serif;
+                }
+                .section {
+                    margin-bottom: 30px;
+                    background: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                }
+                .section-title {
+                    background: #1538a4;
+                    color: white;
+                    padding: 10px 15px;
+                    margin-bottom: 15px;
+                    border-radius: 5px;
+                    font-weight: bold;
+                }
+                .table {
+                    background: white;
+                }
+                .table th {
+                    background: #f8f9fa;
+                }
+                .data-row {
+                    display: flex;
+                    margin-bottom: 10px;
+                }
+                .data-label {
+                    font-weight: bold;
+                    min-width: 200px;
+                }
+                @media print {
+                    .no-print { display: none; }
+                    .section {
+                        break-inside: avoid;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="text-right no-print mb-3">
+                    <button onclick="window.print()" class="btn btn-primary">Print Report</button>
+                </div>
+
+                <h1 class="text-center mb-4">Charge Nurse Report</h1>
+
+                <!-- Basic Information -->
+                <div class="section">
+                    <h3 class="section-title">Basic Information</h3>
+                    <div class="data-row">
+                        <span class="data-label">Date:</span>
+                        <span>${reportData.date}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Shift:</span>
+                        <span>${reportData.shift}</span>
+                    </div>
+                </div>
+
+                <!-- Attendance -->
+                <div class="section">
+                    <h3 class="section-title">Attendance Details</h3>
+                    <div class="data-row">
+                        <span class="data-label">P1:</span>
+                        <span>${reportData.attendance.p1}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">P3:</span>
+                        <span>${reportData.attendance.p3}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">C2:</span>
+                        <span>${reportData.attendance.c2}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Absent:</span>
+                        <span>${reportData.attendance.absent}</span>
+                    </div>
+                </div>
+
+                <!-- CPR Team -->
+                <div class="section">
+                    <h3 class="section-title">CPR Team</h3>
+                    <div class="data-row">
+                        <span class="data-label">Chest Compression:</span>
+                        <span>${reportData.cprTeam.chestCompression}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">IV Access & Medication:</span>
+                        <span>${reportData.cprTeam.ivAccessMedication}</span>
+                    </div>
+                    <div class="data -row">
+                        <span class="data-label">Airway:</span>
+                        <span>${reportData.cprTeam.airway}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Monitor & Defibrillator:</span>
+                        <span>${reportData.cprTeam.monitorDefibrillator}</span>
+                    </div>
+                </div>
+
+                <!-- Narcotic -->
+                <div class="section">
+                    <h3 class="section-title">Narcotic</h3>
+                    <div class="data-row">
+                        <span class="data-label">Midazolam:</span>
+                        <span>${reportData.narcotic.midazolam}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Fentanyl:</span>
+                        <span>${reportData.narcotic.fentanyl}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Tramal:</span>
+                        <span>${reportData.narcotic.tramal}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Diazepam:</span>
+                        <span>${reportData.narcotic.diazepam}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Morphine:</span>
+                        <span>${reportData.narcotic.morphine}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Ketamine:</span>
+                        <span>${reportData.narcotic.ketamine}</span>
+                    </div>
+                </div>
+
+                <!-- Biomedical Gas -->
+                <div class="section">
+                    <h3 class="section-title">Biomedical Gas</h3>
+                    <div class="data-row">
+                        <span class="data-label">Cylinder Stock:</span>
+                        <span>${reportData.biomedicalGas.cylinderStock}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Crash Cart Cylinder:</span>
+                        <span>${reportData.biomedicalGas.crashCartCylinder}</span>
+                    </div>
+                </div>
+
+                <!-- Utility Room -->
+                <div class="section">
+                    <h3 class="section-title">Utility Room</h3>
+                    <div class="data-row">
+                        <span class="data-label">Linen Stock:</span>
+                        <span>${reportData.utilityRoom.linenStock}</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Remarks:</span>
+                        <span>${reportData.utilityRoom.remarks}</span>
+                    </div>
+                </div>
+
+                <!-- CSSD Entries -->
+                ${reportData.cssdEntries.length > 0 ? `
+                    <div class="section">
+                        <h3 class="section-title">CSSD Entries</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Items Sent</th>
+                                    <th>Items Received</th>
+                                    <th>Time</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${reportData.cssdEntries.map(entry => `
+                                    <tr>
+                                        <td>${entry.itemsSent}</td>
+                                        <td>${entry.itemsReceived}</td>
+                                        <td>${entry.time}</td>
+                                        <td>${entry.remarks}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                ` : ''}
+
+                <!-- Maintenance Entries -->
+                ${reportData.maintenanceEntries.length > 0 ? `
+                    <div class="section">
+                        <h3 class="section-title">Maintenance Entries</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Issue</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Priority</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${reportData.maintenanceEntries.map(entry => `
+                                    <tr>
+                                        <td>${entry.type}</td>
+                                        <td>${entry.location}</td>
+                                        <td>${entry.issue}</td>
+                                        <td>${entry.timeReported}</td>
+                                        <td>${entry.status}</td>
+                                        <td>${entry.priority}</td>
+                                        <td>${entry.remarks}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                ` : ''}
+
+                <!-- CMH Logs -->
+                ${reportData.cmhLogs.length > 0 ? `
+                    <div class="section">
+                        <h3 class="section-title">CMH Logs</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Staff Nurse</th>
+                                    <th>Log Details</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${reportData.cmhLogs.map(log => `
+                                    <tr>
+                                        <td>${log.nurse}</td>
+                                        <td>${log.logDetails}</td>
+                                        <td>${log.remarks}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                ` : ''}
+
+                <!-- Events -->
+                ${reportData.events ? `
+                    <div class="section">
+                        <h3 class="section-title">Events</h3>
+                        <div class="data-row">
+                            <span class="data-label">Type:</span>
+                            <span>${reportData.events.type}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Priority:</span>
+                            <span>${reportData.events.priority}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Time:</span>
+                            <span>${reportData.events.time}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Staff/Patient Involved:</span>
+                            <span>${reportData.events.staffPatientInvolved}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Location:</span>
+                            <span>${reportData.events.location}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Description:</span>
+                            <span>${reportData.events.description}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Action:</span>
+                            <span>${reportData.events.action}</span>
+                        </div>
+                    </div>
+                ` : ''}
+
+                <!-- Spotlight Report -->
+                ${reportData.spotlight ? `
+                    <div class="section">
+                        <h3 class="section-title">Spotlight Report</h3>
+                        <div class="data-row">
+                            <span class="data-label">Level:</span>
+                            <span>${reportData.spotlight.level}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Description:</span>
+                            <span>${reportData.spotlight.description}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Feedback:</span>
+                            <span>${reportData.spotlight.feedback}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Status:</span>
+                            <span>${reportData.spotlight.status}</span>
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+
+
+        </body>
+        </html>
+    `);
+    reportWindow.document.close();
+}
+
+
+
+</script>
+
+<!-- Add this before </body> -->
+<footer class="footer">
+    <div class="footer-content">
+        Designed By Mr.Mohamed Ghonaim
+    </div>
+</footer>
+
+</body>
+</html>
