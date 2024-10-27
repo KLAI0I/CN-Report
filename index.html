@@ -316,6 +316,15 @@ label {
             background-color: white;
             padding: 0;
         }
+
+    .header-logo {
+        max-width: 300px; /* adjusted size for printing */
+    }
+    
+    .header-container {
+        margin-bottom: 10px;
+    }
+
         .no-print { 
             display: none; 
         }
@@ -380,6 +389,20 @@ label {
         print-color-adjust: exact !important;
     }
 }
+.header-container {
+    text-align: center;
+    padding: 20px 0;
+    background: #fff;
+    margin-bottom: 20px;
+}
+
+.header-logo {
+    width: 100%;
+    max-width: 400px; /* adjusted for Care logo dimensions */
+    height: auto;
+    display: block;
+    margin: 0 auto 20px auto;
+}
     </style>
     <!-- Add the html2pdf library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -387,13 +410,17 @@ label {
 </head>
 
 <body>
-          <div class="header-container">
-        <img src="https://github.com/KLAI0I/CN-Report/blob/c43d2122f61e2e539ecb2c51146ea4accbc5c8df/img/Care%20logo.png" alt="Company Logo" class="header-logo">
+    <div class="header-container">
+        <img src="https://raw.githubusercontent.com/KLAI0I/CN-Report/c43d2122f61e2e539ecb2c51146ea4accbc5c8df/img/Care%20logo.png" 
+             alt="Care Logo" 
+             class="header-logo">
     </div>
-<div class="container" id="reportContent">
-    <div class="header">
-        <h1>Charge Nurse Report</h1>
-    </div>
+    
+    <div class="container" id="reportContent">
+        <div class="header">
+            <h1>Charge Nurse Report</h1>
+        </div>
+        <!-- Rest of your content -->
 
  <!-- Date and Shift Section -->
 <div class="form-row">
