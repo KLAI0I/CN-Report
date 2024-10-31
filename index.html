@@ -306,7 +306,6 @@ label {
     .section-title.attendance::before { content: "👥"; }
 
     .section-title.narcotic::before { content: "💉"; }
-    .section-title.gas::before { content: "【O₂】"; }
     .section-title.cssd::before { content: "⟲"; }
     .section-title.maintenance::before { content: "🔧"; }
     .section-title.cmh::before { content: "📝"; }
@@ -503,21 +502,6 @@ label {
             <input type="text" class="form-control" id="ketamine" placeholder="No. of empty Ketamine ">
         </div>
     </div>
-
-
-    <!-- Biomedical Gas Section -->
-    <h3 class="section-title gas">Biomedical Gas</h3>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="cylinderStock">Cylinder Stock</label>
-            <input type="text" class="form-control" id="cylinderStock" placeholder="How Many O2 Cylinders in your Stock ?">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="crashCartCylinder">Crash Cart Cylinder Amount</label>
-            <input type="text" class="form-control" id="crashCartCylinder" placeholder="The amount of O2 in Crash cart Cylinder">
-        </div>
-    </div>
-
 
 <!-- CSSD Section -->
 <h3 class="section-title cssd">CSSD Entries</h3>
@@ -1232,11 +1216,6 @@ function saveAndGenerateReport() {
             ketamine: document.getElementById('ketamine').value
         },
 
-        // Biomedical Gas
-        biomedicalGas: {
-            cylinderStock: document.getElementById('cylinderStock').value,
-            crashCartCylinder: document.getElementById('crashCartCylinder').value
-        },
 
         // CSSD Entries
         cssdEntries: Array.from(document.getElementsByClassName('cssd-entry')).map(entry => ({
@@ -1407,18 +1386,6 @@ function saveAndGenerateReport() {
                     </div>
                 </div>
 
-                <!-- Biomedical Gas -->
-                <div class="section">
-                    <h3 class="section-title">Biomedical Gas</h3>
-                    <div class="data-row">
-                        <span class="data-label">Cylinder Stock:</span>
-                        <span>${reportData.biomedicalGas.cylinderStock}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Crash Cart Cylinder:</span>
-                        <span>${reportData.biomedicalGas.crashCartCylinder}</span>
-                    </div>
-                </div>
 
                 <!-- CSSD Entries -->
                 ${reportData.cssdEntries.length > 0 ? `
@@ -1931,11 +1898,6 @@ function saveAndGenerateReport() {
             ketamine: document.getElementById('ketamine').value
         },
 
-        // Biomedical Gas
-        biomedicalGas: {
-            cylinderStock: document.getElementById('cylinderStock').value,
-            crashCartCylinder: document.getElementById('crashCartCylinder').value
-        },
 
         // CSSD Entries
         cssdEntries: Array.from(document.getElementsByClassName('cssd-entry')).map(entry => ({
@@ -2103,19 +2065,6 @@ function saveAndGenerateReport() {
                     <div class="data-row">
                         <span class="data-label">Ketamine:</span>
                         <span>${reportData.narcotic.ketamine}</span>
-                    </div>
-                </div>
-
-                <!-- Biomedical Gas -->
-                <div class="section">
-                    <h3 class="section-title">Biomedical Gas</h3>
-                    <div class="data-row">
-                        <span class="data-label">Cylinder Stock:</span>
-                        <span>${reportData.biomedicalGas.cylinderStock}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Crash Cart Cylinder:</span>
-                        <span>${reportData.biomedicalGas.crashCartCylinder}</span>
                     </div>
                 </div>
 
