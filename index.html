@@ -1585,7 +1585,18 @@ function setDateAndShift() {
 
 // Call the function when the page loads
 document.addEventListener('DOMContentLoaded', setDateAndShift);
-
+document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.getElementById('notes');
+    if (textarea) {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+        
+        // Initial adjustment
+        textarea.dispatchEvent(new Event('input'));
+    }
+});
 // PDF Generation
 document.getElementById('generatePDF').addEventListener('click', () => {
     const element = document.getElementById('reportContent');
