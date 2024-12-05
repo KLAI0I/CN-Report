@@ -637,8 +637,8 @@ label {
 </div>
 
 
-   <!-- CMH Logs Section -->
-<h3 class="section-title cmh">CMH Logs</h3>
+   <!-- Logs Section -->
+<h3 class="section-title cmh">Logs</h3>
 <div class="form-row">
     <div class="event-status-group">
         <label class="event-radio-group">
@@ -1236,7 +1236,7 @@ function saveAndGenerateReport() {
             remarks: entry.querySelector('.maintenance-remarks').value
         })),
 
-        // CMH Logs
+        // Logs
         cmhLogs: Array.from(document.getElementsByClassName('cmh-log-entry')).map(entry => ({
             nurse: entry.querySelector('.cmh-nurse').value,
             logDetails: entry.querySelector('.cmh-log').value,
@@ -1447,10 +1447,10 @@ function saveAndGenerateReport() {
                     </div>
                 ` : ''}
 
-                <!-- CMH Logs -->
+                <!-- Logs -->
                 ${reportData.cmhLogs.length > 0 ? `
                     <div class="section">
-                        <h3 class="section-title">CMH Logs</h3>
+                        <h3 class="section-title">Logs</h3>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -1929,7 +1929,7 @@ function saveAndGenerateReport() {
             remarks: entry.querySelector('.maintenance-remarks').value
         })),
 
-        // CMH Logs
+        // Logs
         cmhLogs: Array.from(document.getElementsByClassName('cmh-log-entry')).map(entry => ({
             nurse: entry.querySelector('.cmh-nurse').value,
             logDetails: entry.querySelector('.cmh-log').value,
@@ -2139,10 +2139,10 @@ function saveAndGenerateReport() {
                     </div>
                 ` : ''}
 
-                <!-- CMH Logs -->
+                <!-- Logs -->
                 ${reportData.cmhLogs.length > 0 ? `
                     <div class="section">
-                        <h3 class="section-title">CMH Logs</h3>
+                        <h3 class="section-title">Logs</h3>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
